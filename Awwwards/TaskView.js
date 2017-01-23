@@ -77,11 +77,11 @@ TaskView.prototype = {
         this.deleteTaskEvent.notify();
     },
 
-    selectOrUnselectTask: function () {
+    selectOrUnselectTask: function (event) {
 
-        var taskIndex = $(event.target).attr("data-index");
+        var taskIndex = parseInt($(event.target).attr("data-index"), 10);
 
-        if ($(event.target).attr('data-task-selected') == 'false') {
+        if ($(event.target).attr('data-task-selected') === 'false') {
             $(event.target).attr('data-task-selected', true);
             this.selectTaskEvent.notify({
                 taskIndex: taskIndex
@@ -109,7 +109,7 @@ TaskView.prototype = {
         var index = 0;
         for (var task in tasks) {
 
-            if (tasks[task].taskStatus == 'completed') {
+            if (tasks[task].taskStatus === 'completed') {
                 html = "<div style='color:green; text-decoration:line-through'>";
             } else {
                 html = "<div>";

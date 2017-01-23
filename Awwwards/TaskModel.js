@@ -26,7 +26,10 @@
      },
 
      unselectTask: function (taskIndex) {
-         this.selectedTasks.splice(taskIndex, 1);
+         var arrayIndex = this.selectedTasks.indexOf(taskIndex);
+         if(arrayIndex !== -1){
+             this.selectedTasks.splice(arrayIndex, 1);
+         }
      },
 
      setTasksAsCompleted: function () {
