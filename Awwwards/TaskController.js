@@ -11,6 +11,9 @@ TaskController.prototype = {
         this.createChildren()
             .setupHandlers()
             .enable();
+    
+        //initial load
+        this.model.loadTasks();
     },
 
     createChildren: function () {
@@ -21,36 +24,40 @@ TaskController.prototype = {
     },
 
     setupHandlers: function () {
+        //These were not strictly necessary - can just skip the extra abstraction
+        //and bind directly
 
-        this.addTaskHandler = this.addTask.bind(this);
-        this.selectTaskHandler = this.selectTask.bind(this);
-        this.unselectTaskHandler = this.unselectTask.bind(this);
-        this.completeTaskHandler = this.completeTask.bind(this);
-        this.deleteTaskHandler = this.deleteTask.bind(this);
+        //this.addTaskHandler = this.addTask.bind(this);
+        //this.selectTaskHandler = this.selectTask.bind(this);
+        //this.unselectTaskHandler = this.unselectTask.bind(this);
+        //this.completeTaskHandler = this.completeTask.bind(this);
+        //this.deleteTaskHandler = this.deleteTask.bind(this);
         return this;
     },
 
     enable: function () {
 
-        this.view.addTaskEvent.attach(this.addTaskHandler);
-        this.view.completeTaskEvent.attach(this.completeTaskHandler);
-        this.view.deleteTaskEvent.attach(this.deleteTaskHandler);
-        this.view.selectTaskEvent.attach(this.selectTaskHandler);
-        this.view.unselectTaskEvent.attach(this.unselectTaskHandler);
+        this.view.addTaskEvent.attach(this.addTask.bind(this));
+        this.view.completeTaskEvent.attach(this.completeTask.bind(this));
+        this.view.deleteTaskEvent.attach(this.deleteTask.bind(this));
+        this.view.selectTaskEvent.attach(this.selectTask.bind(this));
+        this.view.unselectTaskEvent.attach(this.unselectTask.bind(this));
+        
+        //new
+        this.view.selectOrUnselectAllTaskEvent.attach(this.selectOrUnselectAllTask.bind(this));
 
         return this;
     },
 
-
-    addTask: function (sender, args) {
+    addTask: function (args) {
         this.model.addTask(args.task);
     },
 
-    selectTask: function (sender, args) {
+    selectTask: function (args) {
         this.model.setSelectedTask(args.taskIndex);
     },
 
-    unselectTask: function (sender, args) {
+    unselectTask: function (args) {
         this.model.unselectTask(args.taskIndex);
     },
 
@@ -60,6 +67,11 @@ TaskController.prototype = {
 
     deleteTask: function () {
         this.model.deleteTasks();
+    },
+
+    //new
+    selectOrUnselectAllTask: function (args) {
+        this.model.setOrUnsetAllSelectedTask(args.select);
     }
 
 };
