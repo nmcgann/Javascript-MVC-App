@@ -41,11 +41,11 @@ TaskView.prototype = {
         //These were not strictly necessary - can just skip the extra abstraction
         //and bind directly
 
-        //this.addTaskButtonHandler = this.addTaskButton.bind(this);
-        //this.selectOrUnselectTaskHandler = this.selectOrUnselectTask.bind(this);
-        //this.completeTaskButtonHandler = this.completeTaskButton.bind(this);
-        //this.deleteTaskButtonHandler = this.deleteTaskButton.bind(this);
-
+        this.addTaskButtonHandler = this.addTaskButton.bind(this);
+        this.selectOrUnselectTaskHandler = this.selectOrUnselectTask.bind(this);
+        this.completeTaskButtonHandler = this.completeTaskButton.bind(this);
+        this.deleteTaskButtonHandler = this.deleteTaskButton.bind(this);
+        this.selectOrUnselectAllTaskHandler = this.selectOrUnselectAllTask.bind(this)
         /**
         Handlers from Event Dispatcher
         */
@@ -61,13 +61,13 @@ TaskView.prototype = {
         /*
          * Control bindings
          */
-        this.$addTaskButton.on('click', this.addTaskButton.bind(this));
-        this.$container.on('click', '.js-task', this.selectOrUnselectTask.bind(this));
-        this.$container.on('click', '.js-complete-task-button', this.completeTaskButton.bind(this));
-        this.$container.on('click', '.js-delete-task-button', this.deleteTaskButton.bind(this));
+        this.$addTaskButton.on('click', this.addTaskButtonHandler);
+        this.$container.on('click', '.js-task', this.selectOrUnselectTaskHandler);
+        this.$container.on('click', '.js-complete-task-button', this.completeTaskButtonHandler);
+        this.$container.on('click', '.js-delete-task-button', this.deleteTaskButtonHandler);
         
         //added
-        this.$container.on('change', '.js-select-all-tasks', this.selectOrUnselectAllTask.bind(this));
+        this.$container.on('change', '.js-select-all-tasks', this.selectOrUnselectAllTaskHandler);
 
         /**
          * Event Dispatcher

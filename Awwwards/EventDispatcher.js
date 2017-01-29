@@ -12,9 +12,14 @@ Event.prototype = {
     },
 
     notify: function (args) {
+        var self = this;
         if(this.debug) console.log('notify: ', this._debugInfo, ' args: ', args);
         for (var i = 0, len = this._listeners.length; i < len; i += 1) {
-            this._listeners[i](args);
+            (function(i, args){
+                setTimeout(function(){
+                    self._listeners[i](args);
+                },0);
+            })(i, args);
         }
     }
 
